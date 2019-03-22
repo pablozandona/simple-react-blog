@@ -25,6 +25,7 @@ class NewPost extends React.Component {
     }
 
     reset() {
+        state.sections = [];
         this.setState({...state});
     }
 
