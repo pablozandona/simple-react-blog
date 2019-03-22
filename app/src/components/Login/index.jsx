@@ -4,12 +4,26 @@ import './login.scss';
 import {Alert, Modal} from "react-bootstrap";
 import {userService} from "../../services";
 
+const state = {
+    loginForm: {
+        user: '',
+        password: ''
+    },
+    registerForm: {
+        user: '',
+        password: '',
+        name: '',
+    },
+    loginFormSubmitted: false,
+    registerFormSubmitted: false,
+    errorLogin: false,
+    errorRegister: false
+};
+
 class Login extends React.Component {
     constructor(props) {
         super(props);
-
-        this.reset();
-
+        this.state = {...state};
         this.handleChangeLogin = this.handleChangeLogin.bind(this);
         this.handleChangeRegister = this.handleChangeRegister.bind(this);
         this.loginSubmit = this.loginSubmit.bind(this);
@@ -17,21 +31,7 @@ class Login extends React.Component {
     }
 
     reset() {
-        this.state = {
-            loginForm: {
-                user: '',
-                password: ''
-            },
-            registerForm: {
-                user: '',
-                password: '',
-                name: '',
-            },
-            loginFormSubmitted: false,
-            registerFormSubmitted: false,
-            errorLogin: false,
-            errorRegister: false
-        };
+        this.setState({...state});
     }
 
     handleChangeLogin(e) {

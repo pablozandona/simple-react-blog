@@ -5,12 +5,19 @@ import {blogService} from "../../services";
 import {withRouter} from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
+const state = {
+    title: '',
+    sections: [],
+    content: '',
+    formSubmitted: false,
+    error: false,
+};
+
 class NewPost extends React.Component {
+
     constructor(props) {
         super(props);
-
-        this.reset();
-
+        this.state = {...state};
         this.handleSectionChange = this.handleSectionChange.bind(this);
         this.handleSubSectionChange = this.handleSubSectionChange.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -18,13 +25,7 @@ class NewPost extends React.Component {
     }
 
     reset() {
-        this.state = {
-            title: '',
-            sections: [],
-            content: '',
-            formSubmitted: false,
-            error: false,
-        };
+        this.setState({...state});
     }
 
     handleChange(e) {
@@ -63,12 +64,12 @@ class NewPost extends React.Component {
 
         let errorSection = false;
 
-        for(const s of sections) {
-            if(!s.title || !s.content) {
+        for (const s of sections) {
+            if (!s.title || !s.content) {
                 errorSection = true;
             }
-            for(const sub in sections.subSections) {
-                if(!sub.title || !sub.content) {
+            for (const sub in sections.subSections) {
+                if (!sub.title || !sub.content) {
                     errorSection = true;
                 }
             }
@@ -142,12 +143,13 @@ class NewPost extends React.Component {
                                 {sections.map((section, index) => {
                                     return (
                                         <div key={index} className="ml-5 mb-2 section">
-                                            <h6>Sessão {index+1}</h6>
+                                            <h6>Sessão {index + 1}</h6>
                                             <div
                                                 className={'form-group' + (formSubmitted && !section.title ? ' has-error' : '')}>
                                                 <input type="text" className="form-control" name="title"
                                                        value={section.title}
-                                                       onChange={e => this.handleSectionChange(e, index)} placeholder="Título"/>
+                                                       onChange={e => this.handleSectionChange(e, index)}
+                                                       placeholder="Título"/>
                                                 {formSubmitted && !section.title &&
                                                 <div className="help-block">Campo obrigatório.</div>
                                                 }
@@ -155,21 +157,23 @@ class NewPost extends React.Component {
                                             <div
                                                 className={'form-group' + (formSubmitted && !section.content ? ' has-error' : '')}>
                                                 <textarea className="form-control" name="content"
-                                                       value={section.content}
-                                                       onChange={e => this.handleSectionChange(e, index)} placeholder="Conteúdo"/>
+                                                          value={section.content}
+                                                          onChange={e => this.handleSectionChange(e, index)}
+                                                          placeholder="Conteúdo"/>
                                                 {formSubmitted && !section.content &&
                                                 <div className="help-block">Campo obrigatório.</div>
                                                 }
                                             </div>
                                             {section.subSections.map((subsection, indexSub) => {
                                                 return (
-                                                    <div key={'s'+index+indexSub} className="mb-2 ml-5 section">
-                                                        <h6>Subsessão {indexSub+1}</h6>
+                                                    <div key={'s' + index + indexSub} className="mb-2 ml-5 section">
+                                                        <h6>Subsessão {indexSub + 1}</h6>
                                                         <div
                                                             className={'form-group' + (formSubmitted && !subsection.title ? ' has-error' : '')}>
                                                             <input type="text" className="form-control" name="title"
                                                                    value={subsection.title}
-                                                                   onChange={e => this.handleSubSectionChange(e, index, indexSub)} placeholder="Título"/>
+                                                                   onChange={e => this.handleSubSectionChange(e, index, indexSub)}
+                                                                   placeholder="Título"/>
                                                             {formSubmitted && !subsection.title &&
                                                             <div className="help-block">Campo obrigatório.</div>
                                                             }
@@ -177,8 +181,9 @@ class NewPost extends React.Component {
                                                         <div
                                                             className={'form-group' + (formSubmitted && !subsection.content ? ' has-error' : '')}>
                                                             <textarea className="form-control" name="content"
-                                                                   value={subsection.content}
-                                                                   onChange={e => this.handleSubSectionChange(e, index, indexSub)} placeholder="Conteúdo"/>
+                                                                      value={subsection.content}
+                                                                      onChange={e => this.handleSubSectionChange(e, index, indexSub)}
+                                                                      placeholder="Conteúdo"/>
                                                             {formSubmitted && !subsection.content &&
                                                             <div className="help-block">Campo obrigatório.</div>
                                                             }
@@ -186,7 +191,8 @@ class NewPost extends React.Component {
                                                     </div>
                                                 )
                                             })}
-                                            <Button onClick={() => newSubSection(section)} variant="light">Aicionar subsessão</Button>
+                                            <Button onClick={() => newSubSection(section)} variant="light">Aicionar
+                                                subsessão</Button>
                                         </div>
                                     )
                                 })}
@@ -206,13 +212,5 @@ class NewPost extends React.Component {
         );
     }
 }
-
-// const mapStateToProps = state => ({
-//     user: state.home.user,
-// });
-//
-// const mapDispatchToProps = dispatch => ({
-//     loginSuccess: user => dispatch({type: 'LOGIN_SUCCESS', user}),
-// });
 
 export default withRouter(NewPost);

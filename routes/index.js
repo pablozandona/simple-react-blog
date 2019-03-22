@@ -7,7 +7,7 @@ const Post = mongoose.model('Post');
 
 const SEPARATOR = '@a)M(E)9mfe)(F';
 
-router.get('/blog/list', async (req, res, next) => {
+router.get('/api/blog/list', async (req, res, next) => {
     try {
         res.send(await Blog.find().sort({lastUpdate: -1}));
     } catch (e) {
@@ -15,7 +15,7 @@ router.get('/blog/list', async (req, res, next) => {
     }
 });
 
-router.post('/user/register', (req, res, next) => {
+router.post('/api/user/register', (req, res, next) => {
     const {body} = req;
     const user = new User(body);
     return user.save()
@@ -26,7 +26,7 @@ router.post('/user/register', (req, res, next) => {
         .catch(next);
 });
 
-router.post('/user/authenticate', (req, res, next) => {
+router.post('/api/user/authenticate', (req, res, next) => {
     const {body} = req;
     return User.findOne({user: body.user, password: body.password})
         .then((user) => {
@@ -43,7 +43,7 @@ router.post('/user/authenticate', (req, res, next) => {
 });
 
 
-router.get('/blog/:id', async (req, res, next) => {
+router.get('/api/blog/:id', async (req, res, next) => {
     try {
         const id = req.params.id;
         const blog = await Blog.findOne({_id: id});
@@ -57,7 +57,7 @@ router.get('/blog/:id', async (req, res, next) => {
     }
 });
 
-router.get('/blog/:id/posts', async (req, res, next) => {
+router.get('/api/blog/:id/posts', async (req, res, next) => {
     try {
         const id = req.params.id;
         const blog = await Blog.findOne({_id: id});
@@ -71,7 +71,7 @@ router.get('/blog/:id/posts', async (req, res, next) => {
     }
 });
 
-router.all('*', async (req, res, next) => {
+router.all('/api/*', async (req, res, next) => {
     try {
         if (req.headers.authorization) {
             const token = req.headers.authorization;
@@ -90,7 +90,7 @@ router.all('*', async (req, res, next) => {
     }
 });
 
-router.post('/blog/create', (req, res, next) => {
+router.post('/api/blog/create', (req, res, next) => {
     try {
         const user = req.user;
         const {body} = req;
@@ -112,7 +112,7 @@ router.post('/blog/create', (req, res, next) => {
     }
 });
 
-router.post('/post/create', async (req, res, next) => {
+router.post('/api/post/create', async (req, res, next) => {
     const user = req.user;
     const {body} = req;
     const blog = await Blog.findOne({_id: body.blog, owner: user._id});

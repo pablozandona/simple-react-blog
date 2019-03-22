@@ -49,7 +49,6 @@ class Blog extends React.Component {
 
     getPosts() {
         blogService.getPosts(this.state.blog._id).then(r => {
-            console.log(r);
             this.setState({posts: r});
         }, e => {
             this.setState({error: true});
