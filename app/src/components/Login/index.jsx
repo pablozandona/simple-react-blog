@@ -53,10 +53,10 @@ class Login extends React.Component {
     loginSuccess(r) {
         this.saveUser(r);
         this.reset();
-        this.props.closemodal();
         localStorage.setItem('user', JSON.stringify(r.user));
         localStorage.setItem('token', JSON.stringify(r.token));
         this.props.loginSuccess(r.user);
+        this.props.closemodal();
     }
 
     loginSubmit(e) {
@@ -81,7 +81,6 @@ class Login extends React.Component {
 
         this.setState({registerFormSubmitted: true});
         const {registerForm} = this.state;
-        const {loginSuccess} = this.props;
 
         if (!registerForm.name || !registerForm.password || !registerForm.user) return;
 

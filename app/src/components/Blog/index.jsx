@@ -5,7 +5,6 @@ import moment from "moment";
 import {blogService, userService} from "../../services";
 import {Alert} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-import Login from "../Login";
 import NewPost from "../NewPost";
 import Tooltip from "react-bootstrap/Tooltip";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
@@ -57,6 +56,7 @@ class Blog extends React.Component {
     }
 
     verifyOwner() {
+        console.log('verifyOwner',this.state.blog.owner, this.props.user )
         if(this.props.user) {
             this.setState({userIsOwner: this.state.blog.owner === this.props.user._id});
         }
@@ -75,6 +75,7 @@ class Blog extends React.Component {
         };
 
         return (
+
             <div style={{marginTop: '56px'}}>
                 <NewPost
                     show={modalNewPostShow}
@@ -85,15 +86,9 @@ class Blog extends React.Component {
                         this.getPosts()
                     }}
                 />
-                <Login
-                    show={modalLoginShow}
-                    onHide={() => this.setState({modalLoginShow: false})}
-                    closemodal={() => {
-                        this.setState({modalLoginShow: false});
-                    }}
-                />
-
-                <Header/>
+                <Header closemodal={() => {
+                    this.verifyOwner();
+                }}/>
                 <section className="jumbotron text-center container">
                     <div className="container">
                         <h1 className="jumbotron-heading">{blog.title}</h1>

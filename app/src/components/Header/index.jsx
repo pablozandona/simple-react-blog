@@ -42,7 +42,10 @@ class Header extends React.Component {
                         <Login
                             show={this.state.modalShow}
                             onHide={modalClose}
-                            closemodal={() => this.setState({modalShow: false})}
+                            closemodal={() => {
+                                this.setState({modalShow: false})
+                                this.props.closemodal();
+                            }}
                         />
                     </div>
                 </div>
