@@ -31,12 +31,6 @@ if(!isProduction) {
 
 app.use(express.static(path.join(__dirname, 'app', 'dist')));
 
-app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname, 'app', 'dist', 'index.html'));
-});
-
-console.log(path.join(__dirname, 'app', 'dist', 'index.html'))
-
 mongoose.connect(DB_URI);
 mongoose.set('debug', true);
 
@@ -45,8 +39,15 @@ require('./models/User');
 require('./models/Blog');
 require('./models/Post');
 
-// Add routes
-app.use(require('./routes'));
+app.get('/', (req,res) =>{
+    res.sendFile(path.join(__dirname, 'app', 'dist', 'index.html'));
+});
+
+app.use('/api', require('./routes'));
+
+app.get('*', (req,res) =>{
+    res.sendFile(path.join(__dirname, 'app', 'dist', 'index.html'));
+});
 
 app.use((req, res, next) => {
   const err = new Error('Not Found');
