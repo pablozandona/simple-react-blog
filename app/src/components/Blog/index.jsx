@@ -22,7 +22,8 @@ class Blog extends React.Component {
             category: '',
             subCategory: '',
             posts: [],
-            blog: {}
+            blog: {},
+            loading: true
         };
     }
 
@@ -49,7 +50,7 @@ class Blog extends React.Component {
 
     getPosts() {
         blogService.getPosts(this.state.blog._id).then(r => {
-            this.setState({posts: r});
+            this.setState({posts: r, loading: false });
         }, e => {
             this.setState({error: true});
         });
@@ -62,7 +63,7 @@ class Blog extends React.Component {
     }
 
     render() {
-        const {posts, blog, error, modalNewPostShow, modalLoginShow, userIsOwner} = this.state;
+        const {posts, blog, error, modalNewPostShow, modalLoginShow, userIsOwner, loading} = this.state;
         const {isLogged} = this.props;
 
         let createNewPost = () => {
@@ -109,14 +110,14 @@ class Blog extends React.Component {
                 </section>
 
                 <div className="row justify-content-md-center">
-                    {isLogged && userIsOwner && !error && !posts.length &&
+                    {isLogged && userIsOwner && !error && !posts.length && !loading &&
                     <div className="d-flex justify-content-center">
                         <h4 className="mr-5">Crie seu primeiro post!</h4>
                         <Button onClick={createNewPost} variant="warning">
                             CRIAR
                         </Button>
                     </div>}
-                    {!isLogged && !error && !posts.length &&
+                    {!isLogged && !error && !posts.length && !loading &&
                     <div className="d-flex justify-content-center">
                         <h4 className="mr-5">O Blog ainda não possui posts...</h4>
                     </div>}
