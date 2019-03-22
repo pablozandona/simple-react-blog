@@ -2,7 +2,7 @@
 
 Simple blog created using React & Node.js & MongoDB
 
-[DEMO](https://nodejs.org/en/download/)
+[DEMO](https://bololog.herokuapp.com/)
 
 
 ### Prerequisites

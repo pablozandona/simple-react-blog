@@ -76,4 +76,5 @@ app.use((err, req, res) => {
   });
 });
 
-app.listen(8000, () => console.log('Server started on http://localhost:8000'));
+var port = process.env.PORT || 8080;
+app.listen(port);
