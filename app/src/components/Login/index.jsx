@@ -163,7 +163,7 @@ class Login extends React.Component {
                                 </div>
                                 <div
                                     className={'form-group' + (registerFormSubmitted && !registerForm.password ? ' has-error' : '')}>
-                                    <input type="text" className="form-control" name="password"
+                                    <input type="password" className="form-control" name="password"
                                            value={registerForm.password}
                                            onChange={this.handleChangeRegister} placeholder="Senha"/>
                                     {registerFormSubmitted && !registerForm.password &&

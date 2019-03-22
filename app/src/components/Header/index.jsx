@@ -19,7 +19,7 @@ class Header extends React.Component {
                 <div className="navbar navbar-dark bg-warning shadow-sm fixed-top">
                     <div className="container d-flex justify-content-between">
                         <a href="/" className="navbar-brand d-flex align-items-center text-dark">
-                            <strong>Bolologs</strong>
+                            <strong>BOLOLOG</strong>
                         </a>
 
                         {!isLogged ? (
